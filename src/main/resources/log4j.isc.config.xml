@@ -11,7 +11,7 @@
 
     <appender class="org.apache.log4j.FileAppender" name="FILE_LOG">
         <param name="encoding" value="UTF-8"/>
-        <param name="File" value="./smartClientServerLog.txt"/>
+        <param name="File" value="./smartClientServer.log"/>
         <param name="Append" value="false"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="=== %d [%.4t] %-5p %c{1} - %m%n"/>
