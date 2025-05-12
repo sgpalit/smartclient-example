@@ -1,0 +1,24 @@
+<project name="smexample" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <import file="${basedir}/build-imports.xml" as="sc" />
+
+    <!-- 
+        Import UI assets from Reify via command line. 
+     -->
+    <target name="reify-import" depends="reify-tasklibs">
+
+        <taskdef name="reify-import" classname="com.isomorphic.maven.mojo.reify.ImportTask" classpathref="reify.classpath"/>
+        <reify-import projectName="smexample" username="${username}" password="${password}" 
+                      datasourcesDir="WEB-INF/ds/classic-models" 
+                      smartclientRuntimeDir="${basedir}/war/isomorphic" />
+    </target>
+
+    <target name="reify-validate" depends="reify-tasklibs">
+        
+        <taskdef name="reify-validate" classname="com.isomorphic.maven.mojo.reify.ValidateTask" classpathref="reify.classpath"/>
+        <reify-validate projectName="smexample" 
+                        datasourcesDir="WEB-INF/ds/classic-models" 
+                        smartclientRuntimeDir="${basedir}/war/isomorphic" />
+    </target>
+
+</project>

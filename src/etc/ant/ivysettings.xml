@@ -1,0 +1,22 @@
+<ivysettings>
+  
+    <property name="jetty.version" value="11.0.24" />
+    <property name="smartclient.version" value="14.1-p20250512" />
+    <property name="servlets.version" value="5.0.0" />
+
+        
+    <property name="local.m2.dir" value="${user.home}/.m2/repository/" />
+
+	<settings defaultResolver="default" returnFirst="true" />
+	<resolvers>
+	   <chain name="default">
+	   <filesystem name="local.m2" m2compatible="true">
+	       <artifact pattern="${local.m2.dir}/[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
+	       <ivy pattern="${local.m2.dir}/[organisation]/[module]/[revision]/[module]-[revision].pom" />
+	   </filesystem>
+	   <ibiblio name="central" m2compatible="true"/>
+	
+	   </chain>
+	</resolvers>
+
+</ivysettings>

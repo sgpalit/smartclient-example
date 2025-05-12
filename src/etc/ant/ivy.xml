@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+    
+    <info organisation="be.palit" 
+          module="smartclient-example" 
+          revision="1.0-SNAPSHOT"
+          status="integration" 
+    />
+    
+    <configurations>
+        <conf name="compile" description="Jars needed to enable framework and/or application-level features"/>
+        <conf name="devmode" description="Jars needed to run DevMode"/>
+        <conf name="reify"   description="Jars needed to run Reify tasks from Ant build"/>
+    </configurations>
+
+    <dependencies defaultconf="compile->default">
+        
+        <!-- SmartClient core -->
+        <dependency org="com.isomorphic.smartclient.eval" name="smartclient-eval" rev="${smartclient.version}" />
+        
+        <!-- Use SQLDataSources -->
+        <dependency org="com.isomorphic.smartclient.eval" name="isomorphic-sql" rev="${smartclient.version}" />
+        
+        <!-- Spring Security -->
+        <dependency org="org.springframework.security" name="spring-security-web" rev="6.2.8" />
+
+        <!-- Toolbox -->
+        <dependency org="jakarta.servlet" name="jstl" rev="1.2" />
+        
+        <!-- Use a context listener to start the sample database -->
+        <dependency org="org.hsqldb" name="hsqldb" rev="2.5.1" />
+
+        <!-- Facilitate use of Reify tasks -->
+        <dependency org="com.isomorphic" name="isc-maven-plugin" rev="1.4.6" conf="reify->default" />
+        <dependency org="com.isomorphic.extras" name="isomorphic-m2pluginextras" rev="${smartclient.version}" conf="reify->default" />
+
+        <!-- 
+          Uncomment to include the SmartClient "Admin Console" tool's server component, various data 
+          importers / exporters, and the server-side components of the BatchUploader.  
+          Refer to 'Tools Deployment' documentation topic.
+        -->
+        <!--
+        <dependency org="com.isomorphic.smartclient.eval" name="smartclient-tools" rev="${smartclient.version}" />
+        -->
+
+        <dependency org="jakarta.servlet" name="jakarta.servlet-api" rev="${servlets.version}"/>
+
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-ant -->
+        <dependency org="org.eclipse.jetty" name="jetty-ant" rev="${jetty.version}" conf="devmode->default" />
+        <dependency org="org.eclipse.jetty" name="apache-jsp" rev="${jetty.version}" conf="devmode->default" />
+
+    </dependencies>
+
+
+</ivy-module>

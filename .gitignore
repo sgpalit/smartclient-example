@@ -1,0 +1,37 @@
+# SmartClient
+**/overlays/
+
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper-download.properties
+.mvn/wrapper/maven-wrapper-download.lock
+
+# IntelliJ / Eclipse
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled classes
+*.class
+
+# Temporary files
+*.tmp
+*.swp
+
+# VSCode (if used)
+.vscode/
+
+# Environment-specific files
+.env

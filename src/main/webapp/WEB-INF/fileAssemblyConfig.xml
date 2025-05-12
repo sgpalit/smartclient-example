@@ -1,0 +1,21 @@
+<FileAssembly>
+    <assemblies>
+        <FileAssemblyEntry uri="/main.js">
+            <compress>true</compress>
+            <components>
+                <component>
+                    <type>file</type>
+                    <fileName>js/Utils.js</fileName>
+                </component>
+                <component>
+                    <type>file</type>
+                    <fileName>js/AuthenticationManager.js</fileName>
+                </component>
+                <component>
+                    <type>file</type>
+                    <fileName>js/SmartclientExample.js</fileName>
+                </component>
+            </components>
+        </FileAssemblyEntry>
+    </assemblies>
+</FileAssembly>

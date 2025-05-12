@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>be.palit</groupId>
+  <artifactId>smartclient-example</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <properties>
+    <smartclient.version>14.1-p20250512</smartclient.version>
+    <servlets.version>5.0.0</servlets.version>
+    <spring.version>6.1.9</spring.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>${servlets.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- SmartClient core -->
+    <dependency>
+        <groupId>com.isomorphic.smartclient.eval</groupId>
+        <artifactId>smartclient-eval</artifactId>
+        <version>${smartclient.version}</version>
+        <type>pom</type>
+    </dependency>
+      <dependency>
+          <groupId>com.isomorphic.smartclient.eval</groupId>
+          <artifactId>isomorphic-spring</artifactId>
+          <version>${smartclient.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.isomorphic.smartclient.eval</groupId>
+          <artifactId>isomorphic-hibernate</artifactId>
+          <version>${smartclient.version}</version>
+      </dependency>
+
+    <!-- Use SQLDataSources -->
+    <dependency>
+        <groupId>com.isomorphic.smartclient.eval</groupId>
+        <artifactId>isomorphic-sql</artifactId>
+        <version>${smartclient.version}</version>
+    </dependency>
+
+    <!-- Add the Network Performance module -->
+    <dependency>
+      <groupId>com.isomorphic.smartclient.eval</groupId>
+      <artifactId>isomorphic-network</artifactId>
+      <version>${smartclient.version}</version>
+      <type>pom</type>
+    </dependency>
+
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <!-- Toolbox -->
+    <dependency>
+        <groupId>jakarta.servlet.jsp.jstl</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        <version>1.2.7</version>
+    </dependency>
+
+     <!-- Use a context listener to start the sample database -->
+    <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>2.7.4</version>
+    </dependency>
+
+    <!-- 
+      Uncomment to include the SmartClient "Admin Console" tool's server component, various data 
+      importers / exporters, and the server-side components of the BatchUploader.  
+      Refer to 'Tools Deployment' documentation topic.
+     -->
+    <!--
+    <dependency>
+        <groupId>com.isomorphic.smartclient.eval</groupId>
+        <artifactId>smartclient-tools</artifactId>
+        <version>${smartclient.version}</version>
+        <type>pom</type>
+    </dependency>
+    -->
+
+  </dependencies>
+
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+                <execution>
+                    <id>enforce-maven</id>
+                    <goals>
+                        <goal>enforce</goal>
+                    </goals>
+                    <configuration>
+                        <rules>
+                            <requireMavenVersion>
+                                <version>3.6.3</version>
+                            </requireMavenVersion>
+                        </rules>    
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- Standard Java compile -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+            <configuration>
+                <source>${maven.compiler.source}</source>
+                <target>${maven.compiler.target}</target>
+            </configuration>
+        </plugin>
+
+      <!-- 
+          Standard WAR assembly. 
+          Note that we don't necessarily need explicit configuration 
+          of the plugin or the smartclient-resources overlay, but 
+          doing so makes the overlay visible to jetty:run 
+       -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+      </plugin>
+
+      <!-- Facilitate development with jetty:run -->
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>11.0.24</version>
+        <configuration>
+            <scan />
+          <webApp>
+            <jettyEnvXml>${project.basedir}/src/etc/jetty/jetty-env.xml</jettyEnvXml>
+            <contextPath>/${project.artifactId}</contextPath>
+          </webApp>
+        </configuration>
+        <dependencies>
+          <dependency>
+              <groupId>commons-dbcp</groupId>
+              <artifactId>commons-dbcp</artifactId>
+              <version>1.4</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <!-- 
+           Import UI assets from reify.com via command line.  e.g.,
+           
+             mvn com.isomorphic:isc-maven-plugin:1.4.6:reify-import
+
+           Note that you may also bind this goal to a build phase if desired.
+       -->
+      <plugin>
+          <groupId>com.isomorphic</groupId>
+          <artifactId>isc-maven-plugin</artifactId>
+          <version>1.4.6</version>
+          <configuration>
+            <dataSourcesDir>WEB-INF/ds/classic-models</dataSourcesDir>
+          </configuration>
+          <dependencies>
+             <dependency>
+                 <groupId>com.isomorphic.extras</groupId>
+                 <artifactId>isomorphic-m2pluginextras</artifactId>
+                 <version>${smartclient.version}</version>
+             </dependency>       
+        </dependencies>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
