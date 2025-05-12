@@ -1,5 +1,6 @@
 # SmartClient
 **/overlays/
+/smartClientServerLog.txt
 
 # Maven
 /target/
