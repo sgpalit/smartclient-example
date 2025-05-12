@@ -1,6 +1,7 @@
 # SmartClient
 **/overlays/
 /smartClientServerLog.txt
+/src/main/webapp/WEB-INF/db/samples/
 
 # Maven
 /target/
