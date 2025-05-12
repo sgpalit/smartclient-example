@@ -29,7 +29,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.swp
-
+*.lck
 
 # VSCode (if used)
 .vscode/
